@@ -2,7 +2,8 @@
 use crate::Bus;
 pub struct Ppu {
     line: u8,
-    cycle: u16
+    cycle: u16,
+    pub video: [u32; 256 * 256]
 }
 
 impl Ppu {
@@ -10,6 +11,7 @@ impl Ppu {
         Self {
             line: 0,
             cycle: 0,
+            video: [0u32; 256 * 256]
         }
     }
 

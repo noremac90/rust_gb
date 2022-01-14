@@ -111,7 +111,7 @@ impl Regs {
 pub struct Cpu {
     regs: Regs,
     pub bus: Bus,
-    cycles: u64,
+    pub cycles: u64,
     ime: bool,
 }
 #[derive(Eq, PartialEq)]
@@ -839,9 +839,9 @@ impl Cpu {
     pub fn dump(&self) {
         // A: 01 F: B0 B: 00 C: 13 D: 00 E: D8 H: 01 L: 4D SP: FFFE PC: 00:0101 (C3 13 02 CE)
         let next_bytes = [self.bus.read(self.regs.pc), self.bus.read(self.regs.pc + 1), self.bus.read(self.regs.pc + 2), self.bus.read(self.regs.pc + 3)];
-        println!("A: {:02X} F: {:02X} B: {:02X} C: {:02X} D: {:02X} E: {:02X} H: {:02X} L: {:02X} SP: {:04X} PC: 00:{:04X} ({:02X} {:02X} {:02X} {:02X})",
+        println!("A: {:02X} F: {:02X} B: {:02X} C: {:02X} D: {:02X} E: {:02X} H: {:02X} L: {:02X} SP: {:04X} PC: 00:{:04X} ({:02X} {:02X} {:02X} {:02X}) LY: {}",
             self.regs.a, self.regs.f, self.regs.b, self.regs.c, self.regs.d, self.regs.e, self.regs.h, self.regs.l, self.regs.sp, self.regs.pc,
-            next_bytes[0], next_bytes[1], next_bytes[2], next_bytes[3]);
+            next_bytes[0], next_bytes[1], next_bytes[2], next_bytes[3], self.bus.ior.ly);
     }
 
     fn alu_xor(&mut self, lhs: u8, rhs: u8) -> u8 {
